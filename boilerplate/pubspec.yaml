@@ -38,6 +38,8 @@ dependencies:
   # intro page indicator and screen
   smooth_page_indicator: ^1.2.0+3
   google_fonts: ^6.2.1
+  fl_chart: ^0.69.0
+  pie_chart: ^5.4.0
   
 
 dev_dependencies:
