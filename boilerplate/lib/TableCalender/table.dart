@@ -10,13 +10,13 @@ class TableScreen extends StatefulWidget {
 }
 
 class _TableState extends State<TableScreen> {
-  final digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  final digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       body: Column(
-        children: [
-          TableCalendar(
+        children: [  
+          TableCalendar(  
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             focusedDay: DateTime.now(),
