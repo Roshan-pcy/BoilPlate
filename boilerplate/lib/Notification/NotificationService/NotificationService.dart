@@ -25,7 +25,7 @@ class NotificationClass {
     await _notificationsPlugin.show(0, title, body, notificationDetails);
   }
 
-  void secheduNotification(String title, String body) async {
+  void secheduNotification(String title, String body, int duration) async {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('channelIdd', 'channelNamed',
             priority: Priority.high, importance: Importance.max);
@@ -37,14 +37,50 @@ class NotificationClass {
         0,
         title,
         body,
-        Tz.TZDateTime.now(Tz.local).add(Duration(seconds: 10)),
+        Tz.TZDateTime.now(Tz.local).add(Duration(seconds: duration)),
         notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time);
   }
 
   void stop_Notification() async {
     _notificationsPlugin.cancel(1);
+  }
+
+  void scheduleTestNotificationForTomorrow(String title, String body) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('daily_channelId', 'daily_channelName',
+            priority: Priority.high, importance: Importance.max);
+    var iosDetailes = const DarwinNotificationDetails();
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: iosDetailes);
+
+    // Get current time
+    final now = Tz.TZDateTime.now(Tz.local);
+
+    // Schedule the notification for tomorrow at the same time + 2 minutes
+    Tz.TZDateTime scheduledTime = Tz.TZDateTime.local(
+      now.year,
+      now.month,
+      now.day + 1, // Schedule for tomorrow
+      now.hour,
+      now.minute + 2, // Add 2 minutes for testing purposes
+      now.second,
+    );
+
+    await _notificationsPlugin.zonedSchedule(
+      0,
+      title,
+      body,
+      scheduledTime,
+      notificationDetails,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents:
+          DateTimeComponents.time, // Repeats daily at the same time
+    );
   }
 }
