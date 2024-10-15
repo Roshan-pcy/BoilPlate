@@ -1,10 +1,47 @@
+import 'package:boilerplate/screenmode/themprovider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 class Screenmode extends StatelessWidget {
   const Screenmode({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar());
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'S E T T I N G',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            const Text('Dark Mode'),
+            const SizedBox(
+              width: 5,
+            ),
+            CupertinoSwitch(
+                value: Provider.of<ThemeProvider>(context, listen: false)
+                    .isDarkMode,
+                onChanged: (value) {
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .togle_Theme();
+                }),
+          ],
+        ),
+      ),
+    );
   }
 }
