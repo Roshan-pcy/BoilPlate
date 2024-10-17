@@ -19,6 +19,28 @@ class Screenmode extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Badge.count(
+                count: 10,
+                child: Icon(Icons.notifications),
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Badge(
+                label: Text('offline'),
+                backgroundColor: Colors.orangeAccent,
+                textColor: Colors.black,
+                child: Icon(Icons.wifi),
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Badge.count(
+                count: 100,
+                child: Icon(Icons.notifications),
+              )),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -39,6 +61,11 @@ class Screenmode extends StatelessWidget {
                   Provider.of<ThemeProvider>(context, listen: false)
                       .togle_Theme();
                 }),
+            ElevatedButton(
+                onPressed: () {
+                  showLicensePage(context: context);
+                },
+                child: Text('Show licence page'))
           ],
         ),
       ),

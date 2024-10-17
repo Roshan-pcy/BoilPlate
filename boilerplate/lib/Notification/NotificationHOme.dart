@@ -49,7 +49,7 @@ class _NotificationHomeState extends State<NotificationHome> {
             Center(child: Text('ended')),
             ElevatedButton(
                 onPressed: () {
-                  NotificationClass().secheduNotification('hello', 'hello', 10);
+                  NotificationClass().secheduNotification('hello', 'hello', 3);
                   // NotificationClass().secheduNotification('hello', 'hello', 30);
                   // NotificationClass().secheduNotification('hello', 'hello', 60);
                   // NotificationClass()
@@ -60,16 +60,13 @@ class _NotificationHomeState extends State<NotificationHome> {
                   //     .secheduNotification('hello', 'hello', 1000);
                   print('helloc clicked');
                 },
-                child: Text('hello')),
+                child: Text('check notification')),
             ElevatedButton(
                 onPressed: () {
-                  // NotificationClass().sendNotification('hello', 'hello');
-                  NotificationClass().scheduleTestNotificationForTomorrow(
-                    'ss',
-                    'snnhs',
-                  );
+                  NotificationClass()
+                      .scheduleTestNotificationForTomorrow('hello', 'hello');
 
-                  print('helloc clicked');
+                  print('set');
                 },
                 child: Text('send notification')),
             SizedBox(
@@ -88,6 +85,10 @@ class _NotificationHomeState extends State<NotificationHome> {
                   if (value != null) {
                     setState(() {
                       timeOfDay = value; // Update the timeOfDay variable
+                      NotificationClass()
+                          .scheduleTestNotificationForSelectedTime(
+                              'the day', 'check your routine', timeOfDay);
+                      print('CLikced');
                     });
                     _saveTime(value); // Save the selected time
                   }
