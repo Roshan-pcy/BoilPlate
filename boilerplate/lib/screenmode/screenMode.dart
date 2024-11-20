@@ -1,3 +1,4 @@
+import 'package:boilerplate/screenmode/lightmode.dart';
 import 'package:boilerplate/screenmode/themprovider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class Screenmode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: context.surfaceColor,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -59,7 +60,7 @@ class Screenmode extends StatelessWidget {
                     .isDarkMode,
                 onChanged: (value) {
                   Provider.of<ThemeProvider>(context, listen: false)
-                      .togle_Theme();
+                      .toggleTheme();
                 }),
             ElevatedButton(
                 onPressed: () {

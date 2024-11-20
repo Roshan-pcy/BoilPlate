@@ -4,49 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _themedata = light_mode;
+  ThemeData _currentTheme = light_mode;
 
+  // Constructor
   ThemeProvider() {
-    _loadThemePreference(); // Load theme preference when initializing the provider
+    // Do nothing here; initialize is called explicitly.
   }
 
   // Getter for the current theme
-  ThemeData get getTheme => _themedata;
+  ThemeData get currentTheme => _currentTheme;
 
-  // Setter for the theme, with notification to listeners
-  void set setTheme(ThemeData themeData) {
-    _themedata = themeData;
+  // Getter to check if the current theme is dark mode
+  bool get isDarkMode => _currentTheme == dark_Mode;
+
+  // Toggles between light mode and dark mode
+  void toggleTheme() {
+    _currentTheme = isDarkMode ? light_mode : dark_Mode;
     notifyListeners();
+    _saveThemePreference();
   }
 
-  // Getter for dark mode state
-  bool get isDarkMode => _themedata == dark_Mode;
-
-  // Toggle between light and dark mode
-  void togle_Theme() {
-    if (_themedata == dark_Mode) {
-      setTheme = light_mode;
-    } else {
-      setTheme = dark_Mode;
-    }
-    _saveThemePreference(
-        isDarkMode); // Save the theme preference after toggling
-  }
-
-  // Save theme preference in SharedPreferences
-  Future<void> _saveThemePreference(bool isDarkMode) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  // Saves the current theme preference in SharedPreferences
+  Future<void> _saveThemePreference() async {
+    final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDarkMode', isDarkMode);
   }
 
-  // Load the saved theme preference from SharedPreferences
-  Future<void> _loadThemePreference() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    if (isDarkMode) {
-      setTheme = dark_Mode;
-    } else {
-      setTheme = light_mode;
-    }
+  // Initializes the theme (call this explicitly in main)
+  Future<void> initialize() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedIsDarkMode = prefs.getBool('isDarkMode') ?? false;
+    _currentTheme = savedIsDarkMode ? dark_Mode : light_mode;
   }
 }
